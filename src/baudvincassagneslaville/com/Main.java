@@ -5,10 +5,17 @@ public class Main {
 	public static void main(String[] args) {
 		System.out.println("Bonjour");
 		
-		Logger logger = new Logger();
+		String level = "error";
+		
+		Logger logger = new Logger(level);
+		
+		System.out.println("level : " + level);
 		
 		
-		logger.debug("test morray");
+		logger.debug("test debug");
+		logger.info("test info");
+		logger.error("test error");
+		
 
 	}
 

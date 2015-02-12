@@ -11,8 +11,11 @@ public class Logger {
 	private DateFormat dateFormat;
 	
 	
-	public Logger(){
+	private String level;
+	
+	public Logger(String level){
 		this.initDate();
+		this.level = level;
 	}
 	
 
@@ -23,15 +26,18 @@ public class Logger {
 	
 	
 	public void debug(String log) {
-		System.out.println("DEBUG - " + log + " - " +dateFormat.format(date));
+		if(this.level.equalsIgnoreCase("debug"))
+			System.out.println("DEBUG - " + log + " - " +dateFormat.format(date));
 	}	
 	
 	public void info(String log) {
-		System.out.println("INFO - " + log + " - " +dateFormat.format(date));
+		if(this.level.equalsIgnoreCase("debug") || this.level.equalsIgnoreCase("info"))
+			System.out.println("INFO - " + log + " - " +dateFormat.format(date));
 	}
 	
 	public void error(String log) {
-		System.out.println("ERROR - " + log + " - " +dateFormat.format(date));
+		if(this.level.equalsIgnoreCase("debug") || this.level.equalsIgnoreCase("info") || this.level.equalsIgnoreCase("error"))
+			System.out.println("ERROR - " + log + " - " +dateFormat.format(date));
 	}
 	
 	
