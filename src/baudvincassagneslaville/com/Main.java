@@ -1,18 +1,11 @@
 package baudvincassagneslaville.com;
 
-import java.io.IOException;
-import java.util.List;
-
-
-
 
 public class Main {
-
 	
-
 	final static String FILE_NAME = "LogsFile";	
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args){
 		System.out.println("Bonjour");
 		
 		String level = "debug";
@@ -28,21 +21,16 @@ public class Main {
 		
 		
 		
-		
 		/*
 		 * writes the content of the log file after tests
 		 * 
 		 */
 		FileLogReader fileLogReader = new FileLogReader();
-		List<String> logs = fileLogReader.readSmallTextFile(FILE_NAME);
-		
-		System.out.println(logs);
+		fileLogReader.printLogFile(FILE_NAME);
 	
 	
 		
 	}
-
-	
 	
 	
 }
