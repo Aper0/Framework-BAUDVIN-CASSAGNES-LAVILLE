@@ -1,29 +1,38 @@
 package baudvincassagneslaville.com;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 
 public class Logger {
 
 	
-	final static String FILE_NAME = "LogsFile";	
+	final static String PROPERTIES_FILE_NAME = "config.properties";	
 	
 	private Date date;
 	private DateFormat dateFormat;
 	
-	
+	private String logFileName;
 	private String level;
+	
+	private AbstractLogWriter consoleLogWriter = null;
+	private AbstractLogWriter fileLogWriter = null;
+	
+	
+	
 	private String className;	
 	
-	public Logger(String level, String className){
+	public Logger(String className){
 		this.initDate();
-		this.level = level;
 		this.className = className;
+		this.initProperties();
 	}
 	
-	AbstractLogWriter consoleLogWriter = new ConsoleLogWriter();
-	AbstractLogWriter fileLogWriter = new FileLogWriter(FILE_NAME);
+	
+	
 	
 	
 	/**
@@ -37,24 +46,67 @@ public class Logger {
 	
 	
 	
+	
+	/**
+	 * initialize the log properties from the config.properties file
+	 * 
+	 */
+	private void initProperties() {
+		
+		Properties properties = new Properties();
+		
+		try {
+			FileInputStream in = new FileInputStream(PROPERTIES_FILE_NAME);
+			properties.load(in);
+			in.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		this.level = properties.getProperty("logger.level", "DEBUG");
+		
+		if(properties.getProperty("logger.cibleConsole", "TRUE").equals("TRUE")) {
+			this.consoleLogWriter = new ConsoleLogWriter();
+		}
+		
+		if(properties.getProperty("logger.cibleFile", "TRUE").equals("TRUE")) {
+			this.logFileName = properties.getProperty("logger.pathFile", "LogsFile.txt");
+			this.fileLogWriter = new FileLogWriter(logFileName);
+		}
+		
+		
+		
+	}
+	
+	
+	
+	
+	
 	public void debug(String log) {
-		if(this.level.equalsIgnoreCase("debug")) {
-			consoleLogWriter.writeLog("DEBUG" + printLog(log));
-			fileLogWriter.writeLog("DEBUG" + printLog(log));
+		if(this.level.equalsIgnoreCase("DEBUG")) {
+			if(this.consoleLogWriter != null)
+				this.consoleLogWriter.writeLog("DEBUG" + printLog(log));
+			if(this.fileLogWriter != null)
+				this.fileLogWriter.writeLog("DEBUG" + printLog(log));
 		}
 	}	
 	
 	public void info(String log) {
-		if(this.level.equalsIgnoreCase("debug") || this.level.equalsIgnoreCase("info")) {
-			consoleLogWriter.writeLog("INFO" + printLog(log));
-			fileLogWriter.writeLog("INFO" + printLog(log));
+		if(this.level.equalsIgnoreCase("DEBUG") || this.level.equalsIgnoreCase("INFO")) {
+			if(this.consoleLogWriter != null)
+			this.consoleLogWriter.writeLog("INFO" + printLog(log));
+		if(this.fileLogWriter != null)
+			this.fileLogWriter.writeLog("INFO" + printLog(log));
 		}
 	}
 	
 	public void error(String log) {
-		if(this.level.equalsIgnoreCase("debug") || this.level.equalsIgnoreCase("info") || this.level.equalsIgnoreCase("error")) {
-			consoleLogWriter.writeLog("ERROR" + printLog(log));
-			fileLogWriter.writeLog("ERROR" + printLog(log));
+		if(this.level.equalsIgnoreCase("DEBUG") || this.level.equalsIgnoreCase("INFO") || this.level.equalsIgnoreCase("ERROR")) {	
+			if(this.consoleLogWriter != null)
+				this.consoleLogWriter.writeLog("INFO" + printLog(log));
+			if(this.fileLogWriter != null)
+				this.fileLogWriter.writeLog("INFO" + printLog(log));
 		}
 	}
 	
@@ -82,6 +134,13 @@ public class Logger {
 	private String getClassName() {
 		return this.className;
 	}
+
+
+	public String getLevel() {
+		return this.level;
+	}
+
+
 	
 	
 }

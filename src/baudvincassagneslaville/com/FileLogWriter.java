@@ -17,11 +17,9 @@ public class FileLogWriter implements AbstractLogWriter {
 	
 	
 	public FileLogWriter(String fileName) {
-		// TODO Auto-generated constructor stub
 		this.fileName = fileName;
 		initFile();
 	}
-
 
 	
 	/*
@@ -42,7 +40,7 @@ public class FileLogWriter implements AbstractLogWriter {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+			
 	}
 
 
