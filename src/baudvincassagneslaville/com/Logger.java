@@ -56,10 +56,7 @@ public class Logger {
 	 */
 	public void debug(String log) {
 		if(compareLevels(DEBUG)) {
-			if(this.consoleLogWriter != null)
-				this.consoleLogWriter.writeLog("DEBUG" + printLog(log));
-			if(this.fileLogWriter != null)
-				this.fileLogWriter.writeLog("DEBUG" + printLog(log));
+			printLog("DEBUG",log);
 		}
 	}	
 	
@@ -70,10 +67,7 @@ public class Logger {
 	 */
 	public void info(String log) {
 		if(compareLevels(INFO)) {
-			if(this.consoleLogWriter != null)
-			this.consoleLogWriter.writeLog("INFO" + printLog(log));
-		if(this.fileLogWriter != null)
-			this.fileLogWriter.writeLog("INFO" + printLog(log));
+			printLog("INFO",log);
 		}
 	}
 	
@@ -84,23 +78,55 @@ public class Logger {
 	 */
 	public void error(String log) {
 		if(compareLevels(ERROR)) {	
-			if(this.consoleLogWriter != null)
-				this.consoleLogWriter.writeLog("ERROR" + printLog(log));
-			if(this.fileLogWriter != null)
-				this.fileLogWriter.writeLog("ERROR" + printLog(log));
+			printLog("ERROR",log);
 		}
 	}
 
 	
 	/**
-	 * Display log parameters 
+	 * Display log parameters for each writer initialized
 	 * 
 	 * @param log message written by the user
 	 * @return String corresponding to the log
 	 */
-	private String printLog(String log){
-		return(" class : " + this.getClassName() + " - " + log + " - " + this.dateFormat.format(date));
+	private void printLog(String level, String log){
+		//full log string with : log level, class calling the log, log text, date and time
+		String fullLog = (level + " class : " + this.getClassName() + " - " + log + " - " + this.dateFormat.format(date));
+		
+		if(isCLWInitialized()){
+			this.consoleLogWriter.writeLog(fullLog);
+		}
+		if(isFLWInitialized()){
+			this.fileLogWriter.writeLog(fullLog);
+		}
+		
 	}
+	
+	
+	/**
+	 * Checks if the console log writer is initialized (set at TRUE in the properties)
+	 * @return boolean
+	 */
+	private boolean isCLWInitialized(){
+		if(this.consoleLogWriter == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	/**
+	 * Checks if the file log writer is initialized (set at TRUE in the properties)
+	 * @return boolean
+	 */
+	private boolean isFLWInitialized(){
+		if(this.fileLogWriter == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	
 	
 	/**
@@ -115,7 +141,7 @@ public class Logger {
 	/**
 	 * Read the properties from the config.properties file
 	 * 
-	 * @return
+	 * @return the properties
 	 */
 	private Properties readProperties() {
 		Properties properties = new Properties();
