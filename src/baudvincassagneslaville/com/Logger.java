@@ -17,7 +17,8 @@ public class Logger {
 	final static String PROPERTIES_FILE_NAME = "config.properties";
 	
 	private Date date;
-	private DateFormat dateFormat;
+	private DateFormat logDateFormat;
+	private DateFormat fileDateFormat;
 	
 	private String logFileName;
 	private String defaultFileName = "LogsFile";
@@ -97,7 +98,7 @@ public class Logger {
 	 */
 	private void printLog(String level, String log){
 		//full log string with : log level, class calling the log, log text, date and time
-		String fullLog = (level + " class : " + this.getClassName() + " - " + log + " - " + this.dateFormat.format(date));
+		String fullLog = (level + " class : " + this.getClassName() + " - " + log + " - " + this.logDateFormat.format(date));
 		
 		if(isCLWInitialized()){
 			this.consoleLogWriter.writeLog(fullLog);
@@ -141,7 +142,8 @@ public class Logger {
 	 */
 	private void initDate(){
 		date = new Date();
-		dateFormat = new SimpleDateFormat("HH-mm-ss__dd-MM-yy");
+		this.logDateFormat = new SimpleDateFormat("HH:mm:ss.SSS dd/MM/yy");
+		this.fileDateFormat = new SimpleDateFormat("HH-mm-ss_dd-MM-yy");
 	}
 	
 	
@@ -251,7 +253,7 @@ public class Logger {
 	
 	private FileLogWriter getMFLWProperty(Properties properties) {
 		if(properties.getProperty("logger.cibleMultiFile", "TRUE").equals("TRUE")) {
-			this.logFileName = this.defaultFileName+"-"+this.dateFormat.format(date)+".txt";
+			this.logFileName = this.defaultFileName+"-"+this.fileDateFormat.format(date)+".txt";
 			return FileDefaultWriter(this.logFileName);
 		} else {
 			return null;
@@ -264,7 +266,7 @@ public class Logger {
 		try{
 			int linesNumber = countLines(filename);
 			if (linesNumber >= 200)
-				newFile = new FileLogWriter(filename+this.dateFormat.format(date));
+				newFile = new FileLogWriter(filename+this.fileDateFormat.format(date));
 			else{
 				newFile = new FileLogWriter(filename);
 			}
