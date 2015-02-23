@@ -1,11 +1,15 @@
 package baudvincassagneslaville.com;
 
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
+
 import static baudvincassagneslaville.com.Level.*;
 
 public class Logger {
@@ -16,6 +20,7 @@ public class Logger {
 	private DateFormat dateFormat;
 	
 	private String logFileName;
+	private String defaultFileName = "LogsFile";
 	private Level level;
 	
 	private AbstractLogWriter consoleLogWriter = null;
@@ -205,14 +210,36 @@ public class Logger {
 	 */
 	private FileLogWriter getFLWProperty(Properties properties) {
 		if(properties.getProperty("logger.cibleFile", "TRUE").equals("TRUE")) {
-			this.logFileName = properties.getProperty("logger.pathFile", "LogsFile.txt");
-			return new FileLogWriter(logFileName);
+			this.logFileName = properties.getProperty("logger.pathFile", this.defaultFileName+"-"+this.date+".txt");
+			if(this.logFileName.equals(""))
+				this.logFileName = this.defaultFileName+".txt";
+			if (!this.logFileName.equals(this.defaultFileName+"-"+this.date+".txt"))
+				return FileDefaultWriter(logFileName);
+			else{
+				return new FileLogWriter(logFileName);
+			}
 		} else {
 			return null;
 		}
 	}
 	
 	
+	private FileLogWriter FileDefaultWriter(String filename) {
+		FileLogWriter newFile = null;
+		try{
+			int linesNumber = countLines(filename);
+			if (linesNumber >= 200)
+				newFile = new FileLogWriter(filename+this.date);
+			else{
+				newFile = new FileLogWriter(filename);
+			}
+		} catch(IOException e){
+			e.printStackTrace();
+		}
+		return newFile;
+	}
+
+
 	/**
 	 * Compare the log level from user with the log level of the Class
 	 * 
@@ -247,6 +274,32 @@ public class Logger {
 	}
 
 
+	/*
+	 * 
+	 * Count line number in file, faster than ReadLine()
+	 * 
+	 * 
+	 */
+	private int countLines(String filename) throws IOException {
+	    InputStream is = new BufferedInputStream(new FileInputStream(filename));
+	    try {
+	        byte[] c = new byte[1024];
+	        int count = 0;
+	        int readChars = 0;
+	        boolean empty = true;
+	        while ((readChars = is.read(c)) != -1) {
+	            empty = false;
+	            for (int i = 0; i < readChars; ++i) {
+	                if (c[i] == '\n') {
+	                    ++count;
+	                }
+	            }
+	        }
+	        return (count == 0 && !empty) ? 1 : count;
+	    } finally {
+	        is.close();
+	    }
+	}
 	
 	
 }

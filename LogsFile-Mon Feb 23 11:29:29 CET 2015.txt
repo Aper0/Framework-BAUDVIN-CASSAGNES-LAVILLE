@@ -1,0 +1,2 @@
+INFO class : baudvincassagneslaville.com.Main - test info - 11:29:29.702 23/02/15
+ERROR class : baudvincassagneslaville.com.Main - test error - 11:29:29.702 23/02/15
