@@ -32,7 +32,7 @@ public class FileLogWriter implements AbstractLogWriter {
 		
 		FileOutputStream writer;
 		try {
-			writer = new FileOutputStream(fileName);
+			writer = new FileOutputStream(this.fileName);
 			writer.write((new String()).getBytes());
 			writer.close();
 		} catch (FileNotFoundException e) {

@@ -105,6 +105,9 @@ public class Logger {
 		if(isFLWInitialized()){
 			this.fileLogWriter.writeLog(fullLog);
 		}
+		if(isMFLWInitialized()){
+			this.multiFileLogWriter.writeLog(fullLog);
+		}
 		
 	}
 	
@@ -114,11 +117,7 @@ public class Logger {
 	 * @return boolean
 	 */
 	private boolean isCLWInitialized(){
-		if(this.consoleLogWriter == null) {
-			return false;
-		} else {
-			return true;
-		}
+		return (this.consoleLogWriter != null);
 	}
 	
 	/**
@@ -126,12 +125,14 @@ public class Logger {
 	 * @return boolean
 	 */
 	private boolean isFLWInitialized(){
-		if(this.fileLogWriter == null) {
-			return false;
-		} else {
-			return true;
-		}
+		return (this.fileLogWriter != null);
 	}
+	
+	
+	private boolean isMFLWInitialized(){
+		return (this.multiFileLogWriter != null);
+	}
+	
 	
 	
 	
@@ -140,7 +141,7 @@ public class Logger {
 	 */
 	private void initDate(){
 		date = new Date();
-		dateFormat = new SimpleDateFormat("HH:mm:ss.SSS dd/MM/yy");
+		dateFormat = new SimpleDateFormat("HH-mm-ss__dd-MM-yy");
 	}
 	
 	
@@ -250,7 +251,7 @@ public class Logger {
 	
 	private FileLogWriter getMFLWProperty(Properties properties) {
 		if(properties.getProperty("logger.cibleMultiFile", "TRUE").equals("TRUE")) {
-			this.logFileName = this.defaultFileName+"-"+this.date+".txt";
+			this.logFileName = this.defaultFileName+"-"+this.dateFormat.format(date)+".txt";
 			return FileDefaultWriter(this.logFileName);
 		} else {
 			return null;
@@ -259,10 +260,11 @@ public class Logger {
 	
 	private FileLogWriter FileDefaultWriter(String filename) {
 		FileLogWriter newFile = null;
+		
 		try{
 			int linesNumber = countLines(filename);
 			if (linesNumber >= 200)
-				newFile = new FileLogWriter(filename+this.date);
+				newFile = new FileLogWriter(filename+this.dateFormat.format(date));
 			else{
 				newFile = new FileLogWriter(filename);
 			}
