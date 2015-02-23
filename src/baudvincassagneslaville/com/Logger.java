@@ -25,6 +25,7 @@ public class Logger {
 	
 	private AbstractLogWriter consoleLogWriter = null;
 	private AbstractLogWriter fileLogWriter = null;
+	private AbstractLogWriter multiFileLogWriter = null;
 	
 	private String className;	
 	
@@ -173,6 +174,7 @@ public class Logger {
 		this.level = getLevelProperty(properties);
 		this.consoleLogWriter = getCLWProperty(properties);
 		this.fileLogWriter = getFLWProperty(properties);
+		this.multiFileLogWriter = getMFLWProperty(properties);
 	}
 	
 	
@@ -185,6 +187,7 @@ public class Logger {
 		
 		this.consoleLogWriter = getCLWProperty(properties);
 		this.fileLogWriter = getFLWProperty(properties);
+		this.multiFileLogWriter = getMFLWProperty(properties);
 	}
 	
 	
@@ -239,16 +242,20 @@ public class Logger {
 			this.logFileName = properties.getProperty("logger.pathFile", this.defaultFileName+"-"+this.date+".txt");
 			if(this.logFileName.equals(""))
 				this.logFileName = this.defaultFileName+".txt";
-			if (!this.logFileName.equals(this.defaultFileName+"-"+this.date+".txt"))
-				return FileDefaultWriter(logFileName);
-			else{
-				return new FileLogWriter(logFileName);
-			}
+			return new FileLogWriter(logFileName);
 		} else {
 			return null;
 		}
 	}
 	
+	private FileLogWriter getMFLWProperty(Properties properties) {
+		if(properties.getProperty("logger.cibleMultiFile", "TRUE").equals("TRUE")) {
+			this.logFileName = this.defaultFileName+"-"+this.date+".txt";
+			return FileDefaultWriter(this.logFileName);
+		} else {
+			return null;
+		}
+	}
 	
 	private FileLogWriter FileDefaultWriter(String filename) {
 		FileLogWriter newFile = null;
@@ -307,6 +314,7 @@ public class Logger {
 	 * 
 	 */
 	private int countLines(String filename) throws IOException {
+		if(filename.equals("")){
 	    InputStream is = new BufferedInputStream(new FileInputStream(filename));
 	    try {
 	        byte[] c = new byte[1024];
@@ -325,6 +333,8 @@ public class Logger {
 	    } finally {
 	        is.close();
 	    }
+		}
+		return 0;
 	}
 	
 	
