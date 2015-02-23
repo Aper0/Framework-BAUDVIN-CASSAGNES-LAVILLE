@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
+import static baudvincassagneslaville.com.Level.*;
 
 public class Logger {
 
@@ -15,7 +16,7 @@ public class Logger {
 	private DateFormat dateFormat;
 	
 	private String logFileName;
-	private String level;
+	private Level level;
 	
 	private AbstractLogWriter consoleLogWriter = null;
 	private AbstractLogWriter fileLogWriter = null;
@@ -32,7 +33,7 @@ public class Logger {
 	
 	
 	
-	public Logger(Class<?> currentClass, String level) {
+	public Logger(Class<?> currentClass, Level level) {
 		this.initDate();
 		this.level = level;
 		this.className = currentClass.getName();
@@ -43,7 +44,7 @@ public class Logger {
 	
 	
 	public void debug(String log) {
-		if(this.level.equalsIgnoreCase("DEBUG")) {
+		if(compareLevels(DEBUG)) {
 			if(this.consoleLogWriter != null)
 				this.consoleLogWriter.writeLog("DEBUG" + printLog(log));
 			if(this.fileLogWriter != null)
@@ -52,7 +53,7 @@ public class Logger {
 	}	
 	
 	public void info(String log) {
-		if(this.level.equalsIgnoreCase("DEBUG") || this.level.equalsIgnoreCase("INFO")) {
+		if(compareLevels(INFO)) {
 			if(this.consoleLogWriter != null)
 			this.consoleLogWriter.writeLog("INFO" + printLog(log));
 		if(this.fileLogWriter != null)
@@ -61,7 +62,7 @@ public class Logger {
 	}
 	
 	public void error(String log) {
-		if(this.level.equalsIgnoreCase("DEBUG") || this.level.equalsIgnoreCase("INFO") || this.level.equalsIgnoreCase("ERROR")) {	
+		if(compareLevels(ERROR)) {	
 			if(this.consoleLogWriter != null)
 				this.consoleLogWriter.writeLog("ERROR" + printLog(log));
 			if(this.fileLogWriter != null)
@@ -139,8 +140,22 @@ public class Logger {
 	}
 	
 	
-	private String getLevelProperty(Properties properties) {
-		return properties.getProperty("logger.level", "DEBUG");
+	private Level getLevelProperty(Properties properties) {
+		
+		String l = properties.getProperty("logger.level", "DEBUG");
+		l.toUpperCase();
+		
+		switch(l) {
+			case "DEBUG":
+				return DEBUG;
+			case "INFO":
+				return INFO;
+			case "ERROR":
+				return ERROR;
+			default:
+				return DEBUG;
+		}
+
 	}
 	
 	private ConsoleLogWriter getCLWProperty(Properties properties){
@@ -161,6 +176,19 @@ public class Logger {
 	}
 	
 	
+	/**
+	 * compare the log level from user with level Class
+	 * 
+	 */
+	private boolean compareLevels(Level logLevel) {
+		if(this.level.ordinal() <= logLevel.ordinal()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	
 	
 	
@@ -174,7 +202,7 @@ public class Logger {
 	}
 
 
-	public String getLevel() {
+	public Level getLevel() {
 		return this.level;
 	}
 

@@ -17,15 +17,8 @@ public class LoggerFactory {
 	 * @param level
 	 * @return
 	 */
-	public static Logger getLogger(Class<?> currentClass, String level) {
+	public static Logger getLogger(Class<?> currentClass, Level level) {
 		return new Logger(currentClass, level);
 	}
-	
 		
-		
-		
-	
-	
-	
-	
 }
