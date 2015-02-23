@@ -24,7 +24,11 @@ public class Logger {
 	private String className;	
 	
 	
-	
+	/**
+	 * Logger constructor
+	 * 
+	 * @param currentClass
+	 */
 	public Logger(Class<?> currentClass){
 		this.initDate();
 		this.className = currentClass.getName();
@@ -32,7 +36,12 @@ public class Logger {
 	}
 	
 	
-	
+	/**
+	 * Logger constructor that overwrites level property
+	 *
+	 * @param currentClass
+	 * @param level
+	 */
 	public Logger(Class<?> currentClass, Level level) {
 		this.initDate();
 		this.level = level;
@@ -40,9 +49,11 @@ public class Logger {
 		this.initWriterProperties();
 	}
 	
-	
-	
-	
+	/**
+	 * Method for debug log level
+	 * 
+	 * @param log
+	 */
 	public void debug(String log) {
 		if(compareLevels(DEBUG)) {
 			if(this.consoleLogWriter != null)
@@ -52,6 +63,11 @@ public class Logger {
 		}
 	}	
 	
+	/**
+	 * Method for info log level
+	 * 
+	 * @param log
+	 */
 	public void info(String log) {
 		if(compareLevels(INFO)) {
 			if(this.consoleLogWriter != null)
@@ -61,6 +77,11 @@ public class Logger {
 		}
 	}
 	
+	/**
+	 * Method for error log level
+	 * 
+	 * @param log
+	 */
 	public void error(String log) {
 		if(compareLevels(ERROR)) {	
 			if(this.consoleLogWriter != null)
@@ -69,11 +90,10 @@ public class Logger {
 				this.fileLogWriter.writeLog("ERROR" + printLog(log));
 		}
 	}
-	
-	
-	
+
 	
 	/**
+	 * Display log parameters 
 	 * 
 	 * @param log message written by the user
 	 * @return String corresponding to the log
@@ -83,13 +103,8 @@ public class Logger {
 	}
 	
 	
-	
-	
-	
-	
-
 	/**
-	 * initialize the dateFormat
+	 * Initialize the dateFormat
 	 */
 	private void initDate(){
 		date = new Date();
@@ -97,10 +112,11 @@ public class Logger {
 	}
 	
 	
-	
-	
-	
-	
+	/**
+	 * Read the properties from the config.properties file
+	 * 
+	 * @return
+	 */
 	private Properties readProperties() {
 		Properties properties = new Properties();
 		
@@ -117,7 +133,7 @@ public class Logger {
 	
 	
 	/**
-	 * initialize ALL the log properties from the config.properties file
+	 * Initialize ALL the log properties from the config.properties file
 	 * 
 	 */
 	private void initAllProperties() {
@@ -128,8 +144,9 @@ public class Logger {
 		this.fileLogWriter = getFLWProperty(properties);
 	}
 	
+	
 	/**
-	 * initialize only the writers from the config.properties file
+	 * Initialize only the writers from the config.properties file
 	 * 
 	 */		
 	private void initWriterProperties() {
@@ -140,6 +157,12 @@ public class Logger {
 	}
 	
 	
+	/**
+	 * Get the level property of the logger
+	 * 
+	 * @param properties
+	 * @return
+	 */
 	private Level getLevelProperty(Properties properties) {
 		
 		String l = properties.getProperty("logger.level", "DEBUG");
@@ -158,6 +181,13 @@ public class Logger {
 
 	}
 	
+	
+	/**
+	 * ConsoleLogWriter to display the information in the console
+	 * 
+	 * @param properties
+	 * @return
+	 */
 	private ConsoleLogWriter getCLWProperty(Properties properties){
 		if(properties.getProperty("logger.cibleConsole", "TRUE").equals("TRUE")) {
 			return new ConsoleLogWriter();
@@ -166,6 +196,13 @@ public class Logger {
 		}
 	}
 	
+	
+	/**
+	 * FileLogWriter to write the logger informations into a file
+	 * 
+	 * @param properties
+	 * @return
+	 */
 	private FileLogWriter getFLWProperty(Properties properties) {
 		if(properties.getProperty("logger.cibleFile", "TRUE").equals("TRUE")) {
 			this.logFileName = properties.getProperty("logger.pathFile", "LogsFile.txt");
@@ -177,7 +214,7 @@ public class Logger {
 	
 	
 	/**
-	 * compare the log level from user with level Class
+	 * Compare the log level from user with the log level of the Class
 	 * 
 	 */
 	private boolean compareLevels(Level logLevel) {
@@ -190,10 +227,8 @@ public class Logger {
 	}
 	
 	
-	
-	
 	/**
-	 * getter for className
+	 * Getter for className
 	 * 
 	 * @return String 
 	 */
@@ -201,7 +236,12 @@ public class Logger {
 		return this.className;
 	}
 
-
+	
+	/**
+	 * Getter for level
+	 * 
+	 * @return
+	 */
 	public Level getLevel() {
 		return this.level;
 	}
