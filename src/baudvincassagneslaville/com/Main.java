@@ -10,7 +10,7 @@ public class Main {
 		System.out.println("Bonjour");
 		
 		
-		Logger logger = new Logger(Main.class.getName());
+		Logger logger = LoggerFactory.getLogger(Main.class);
 		
 		System.out.println("level : " + logger.getLevel());
 		
