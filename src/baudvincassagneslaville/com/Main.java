@@ -13,10 +13,12 @@ public class Main {
 		System.out.println("level : " + logger.getLevel());
 		
 		
-		logger.debug("test debug");
-		logger.info("test info");
-		logger.error("test error");
-		
+		int i;
+		for(i = 0; i< 300; i++){
+			logger.debug("test debug");
+			logger.info("test info");
+			logger.error("test error");
+		}
 		
 		
 		/*

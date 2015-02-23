@@ -16,6 +16,16 @@ public class FileLogWriter implements AbstractLogWriter {
 	
 	
 	
+	public String getFileName() {
+		return fileName;
+	}
+
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+
 	public FileLogWriter(String fileName) {
 		this.fileName = fileName;
 		initFile();

@@ -24,12 +24,12 @@ public class Logger {
 	private String defaultFileName = "LogsFile";
 	private Level level;
 	
-	private AbstractLogWriter consoleLogWriter = null;
-	private AbstractLogWriter fileLogWriter = null;
-	private AbstractLogWriter multiFileLogWriter = null;
+	private ConsoleLogWriter consoleLogWriter = null;
+	private FileLogWriter fileLogWriter = null;
+	private FileLogWriter multiFileLogWriter = null;
 	
 	private String className;	
-	
+	private int idFileLog = 1;
 	
 	/**
 	 * Logger constructor
@@ -60,8 +60,9 @@ public class Logger {
 	 * Method for debug log level
 	 * 
 	 * @param log
+	 * @throws IOException 
 	 */
-	public void debug(String log) {
+	public void debug(String log)  {
 		if(compareLevels(DEBUG)) {
 			printLog("DEBUG",log);
 		}
@@ -71,6 +72,7 @@ public class Logger {
 	 * Method for info log level
 	 * 
 	 * @param log
+	 * @throws IOException 
 	 */
 	public void info(String log) {
 		if(compareLevels(INFO)) {
@@ -82,8 +84,9 @@ public class Logger {
 	 * Method for error log level
 	 * 
 	 * @param log
+	 * @throws IOException 
 	 */
-	public void error(String log) {
+	public void error(String log){
 		if(compareLevels(ERROR)) {	
 			printLog("ERROR",log);
 		}
@@ -95,10 +98,12 @@ public class Logger {
 	 * 
 	 * @param log message written by the user
 	 * @return String corresponding to the log
+	 * @throws IOException 
 	 */
 	private void printLog(String level, String log){
 		//full log string with : log level, class calling the log, log text, date and time
 		String fullLog = (level + " class : " + this.getClassName() + " - " + log + " - " + this.logDateFormat.format(date));
+
 		
 		if(isCLWInitialized()){
 			this.consoleLogWriter.writeLog(fullLog);
@@ -107,6 +112,16 @@ public class Logger {
 			this.fileLogWriter.writeLog(fullLog);
 		}
 		if(isMFLWInitialized()){
+			int lines = 0;
+			try {
+				lines = countLines(this.multiFileLogWriter.getFileName());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			if(lines > 200){
+				this.multiFileLogWriter.setFileName(this.defaultFileName+"-"+this.fileDateFormat.format(date)+"_"+this.idFileLog+".txt");
+				idFileLog++;
+			}
 			this.multiFileLogWriter.writeLog(fullLog);
 		}
 		
@@ -143,7 +158,7 @@ public class Logger {
 	private void initDate(){
 		date = new Date();
 		this.logDateFormat = new SimpleDateFormat("HH:mm:ss.SSS dd/MM/yy");
-		this.fileDateFormat = new SimpleDateFormat("HH-mm-ss_dd-MM-yy");
+		this.fileDateFormat = new SimpleDateFormat("HH-mm-ss-SSS_dd-MM-yy");
 	}
 	
 	
@@ -318,25 +333,33 @@ public class Logger {
 	 * 
 	 */
 	private int countLines(String filename) throws IOException {
-		if(filename.equals("")){
-	    InputStream is = new BufferedInputStream(new FileInputStream(filename));
-	    try {
-	        byte[] c = new byte[1024];
-	        int count = 0;
-	        int readChars = 0;
-	        boolean empty = true;
-	        while ((readChars = is.read(c)) != -1) {
-	            empty = false;
-	            for (int i = 0; i < readChars; ++i) {
-	                if (c[i] == '\n') {
-	                    ++count;
-	                }
-	            }
-	        }
-	        return (count == 0 && !empty) ? 1 : count;
-	    } finally {
-	        is.close();
-	    }
+		if(!filename.equals("")){
+			FileInputStream file = null;
+			try {
+				file = new FileInputStream(filename);
+			} catch (Exception e) {
+				file = null;
+			}
+			if(file != null){
+			InputStream is = new BufferedInputStream(file);
+		    try {
+		        byte[] c = new byte[1024];
+		        int count = 0;
+			        int readChars = 0;
+			        boolean empty = true;
+			        while ((readChars = is.read(c)) != -1) {
+			            empty = false;
+			            for (int i = 0; i < readChars; ++i) {
+			                if (c[i] == '\n') {
+			                    ++count;
+			                }
+			            }
+			        }
+			        return (count == 0 && !empty) ? 1 : count;
+			    } finally {
+			        is.close();
+			    }
+			}
 		}
 		return 0;
 	}
