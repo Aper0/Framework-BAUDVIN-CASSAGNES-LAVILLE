@@ -27,7 +27,7 @@ Il y a 3 niveaux de logs :
 
   Il est possible de changer le niveau de priorité dans le fichier "config.properties" ou directement dans le programme.
   
-  Il est possible d'activer ou de désactiver les cibles (la sortie des logs), mais UNIQUEMENT dans le fichier "config.properties" (TRUE ou FALSE en fonction de ce que vous désirez).
+  Il est possible d'activer ou de désactiver les cibles (la sortie des logs), mais UNIQUEMENT dans le fichier "config.properties" (TRUE ou FALSE en fonction de ce que vous préférez).
   
   Il est possible d'activer la sortie sur plusieurs fichiers (200 lignes par fichier).
   
