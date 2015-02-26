@@ -8,17 +8,22 @@ Il y a 3 niveaux de logs :
   - Info
   - Error
 
-Il suffit de l'appeler de cette manière : 
+**Installation :** 
+  
+  Télécharger le projet GitHub et le dézipper dans le répertoire de votre choix.
+  Dans Eclipse, importer la JAR contenue dans le dossier du Framework que vous venez de dézipper en faisant un clic droit sur votre projet -> Build-Path -> Add External Archives puis en choisissant le bon fichier (LogsFramework.jar).
+  
+  
+**Utilisation :**
+
+  Il suffit de l'appeler de cette manière : 
 
   - logger.debug("string");
   - logger.info("string");
   - logger.error("string"); avec "string" qui sera ce que vous souhaitez écrire
 
+**NOTES :**
 
-**Installation :** 
-
-  Télécharger le projet GitHub et le dézipper le framework dans le répertoire de votre projet (pour pouvoir l'appeler dans votre programme).
-
-**Utilisation :**
-
-  Faire un "package baudvincassagneslaville.com;" dans la Classe désirée.
+  Il est possible de changer le niveau de priorité dans le fichier config.properties ou directement dans le programme.
+  
+  Il est possible d'activer ou de désactiver les cibles (la sortie des logs), mais UNIQUEMENT dans le fichier config.properties (TRUE ou FALSE en fonction de ce que vous désirez).
