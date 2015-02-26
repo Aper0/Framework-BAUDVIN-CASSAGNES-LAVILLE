@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
@@ -319,7 +318,25 @@ public class Logger {
 		return this.level;
 	}
 
+	/**
+	 * setter for level
+	 * @param level
+	 */
+	public void setLevel(Level level) {
+		this.level = level;
+	}
 
+	/**
+	 * setter for logFileName
+	 * @param filename
+	 */
+	public void setLogFileName(String filename) {
+		this.fileLogWriter.setFileName(filename);
+	}
+	
+	
+	
+	
 	/*
 	 * 
 	 * Count line number in file, faster than ReadLine()
@@ -359,14 +376,6 @@ public class Logger {
 	}
 
 
-	public void setLevel(Level level) {
-		this.level = level;
-	}
-
-
-	public void setLogFileName(String filename) {
-		this.fileLogWriter.setFileName(filename);
-	}
 	
 	
 }
