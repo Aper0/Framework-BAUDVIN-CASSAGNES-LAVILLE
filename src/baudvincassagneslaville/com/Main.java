@@ -1,5 +1,5 @@
 package baudvincassagneslaville.com;
-
+import static baudvincassagneslaville.com.Level.*;
 
 public class Main {
 	
@@ -13,12 +13,12 @@ public class Main {
 		System.out.println("level : " + logger.getLevel());
 		
 		
-		int i;
-		for(i = 0; i< 300; i++){
+		//int i;
+		//for(i = 0; i< 300; i++){
 			logger.debug("test debug");
 			logger.info("test info");
 			logger.error("test error");
-		}
+		//}
 		
 		
 		/*

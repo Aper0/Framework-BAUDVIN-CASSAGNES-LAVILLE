@@ -60,7 +60,6 @@ public class Logger {
 	 * Method for debug log level
 	 * 
 	 * @param log
-	 * @throws IOException 
 	 */
 	public void debug(String log)  {
 		if(compareLevels(DEBUG)) {
@@ -72,7 +71,6 @@ public class Logger {
 	 * Method for info log level
 	 * 
 	 * @param log
-	 * @throws IOException 
 	 */
 	public void info(String log) {
 		if(compareLevels(INFO)) {
@@ -84,7 +82,6 @@ public class Logger {
 	 * Method for error log level
 	 * 
 	 * @param log
-	 * @throws IOException 
 	 */
 	public void error(String log){
 		if(compareLevels(ERROR)) {	
@@ -97,8 +94,6 @@ public class Logger {
 	 * Display log parameters for each writer initialized
 	 * 
 	 * @param log message written by the user
-	 * @return String corresponding to the log
-	 * @throws IOException 
 	 */
 	private void printLog(String level, String log){
 		//full log string with : log level, class calling the log, log text, date and time
@@ -153,7 +148,7 @@ public class Logger {
 	
 	
 	/**
-	 * Initialize the dateFormat
+	 * Initialize the dateFormat (formatter)
 	 */
 	private void initDate(){
 		date = new Date();
@@ -299,8 +294,7 @@ public class Logger {
 	private boolean compareLevels(Level logLevel) {
 		if(this.level.ordinal() <= logLevel.ordinal()) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
@@ -362,6 +356,16 @@ public class Logger {
 			}
 		}
 		return 0;
+	}
+
+
+	public void setLevel(Level level) {
+		this.level = level;
+	}
+
+
+	public void setLogFileName(String filename) {
+		this.fileLogWriter.setFileName(filename);
 	}
 	
 	
