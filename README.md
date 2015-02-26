@@ -27,9 +27,11 @@ Il y a 3 niveaux de logs :
 
   Exemple de sortie : 
   
-  DEBUG class : baudvincassagneslaville.com.Main - test debug - 21:13:25.287 26/02/15
-  INFO class : baudvincassagneslaville.com.Main - test info - 21:13:25.287 26/02/15
-  ERROR class : baudvincassagneslaville.com.Main - test error - 21:13:25.287 26/02/15
+    DEBUG class : baudvincassagneslaville.com.Main - test debug - 21:13:25.287 26/02/15
+    
+    INFO class : baudvincassagneslaville.com.Main - test info - 21:13:25.287 26/02/15
+    
+    ERROR class : baudvincassagneslaville.com.Main - test error - 21:13:25.287 26/02/15
 
 **NOTES IMPORTANTES :**
 
