@@ -14,12 +14,13 @@ Il y a 3 niveaux de logs :
   Télécharger le projet GitHub pour le code source du projet.
   
   Pour l'installation, rendez-vous sur http://uploaded.net/file/e37p0rgx pour télécharger la JAR correspondante.
+  
   Dans Eclipse, importer la JAR que vous venez de télécharger en faisant un clic droit sur votre projet -> Build-Path -> Add External Archives puis en choisissant le bon fichier (LogsFramework.jar).
   
   
 **Utilisation :**
 
-  Créer un objet Logger logger = LoggerFactory.getLogger(name_of_class.class);
+  Créez un objet Logger logger = LoggerFactory.getLogger(name_of_class.class);
   
   Ensuite appelez le logger comme suit en fonction du niveau souhaité :
 
