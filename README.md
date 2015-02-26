@@ -1,6 +1,7 @@
 # Framework-BAUDVIN-CASSAGNES-LAVILLE
 
-Ce projet est un framework de gestion de logs en Java avec lecture d'un fichier properties.
+Ce projet est un framework de gestion de logs en Java.
+Affichage dans la console, lecture/écriture des logs dans un ou plusieurs fichiers créés automatiquement si vous activez l'option.
 
 Il y a 3 niveaux de logs :
 
