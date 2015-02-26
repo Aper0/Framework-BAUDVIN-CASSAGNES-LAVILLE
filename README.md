@@ -22,8 +22,12 @@ Il y a 3 niveaux de logs :
   - logger.info("string");
   - logger.error("string"); avec "string" qui sera ce que vous souhaitez écrire
 
-**NOTES :**
+**NOTES IMPORTANTES :**
 
-  Il est possible de changer le niveau de priorité dans le fichier config.properties ou directement dans le programme.
+  Il est possible de changer le niveau de priorité dans le fichier "config.properties" ou directement dans le programme.
   
-  Il est possible d'activer ou de désactiver les cibles (la sortie des logs), mais UNIQUEMENT dans le fichier config.properties (TRUE ou FALSE en fonction de ce que vous désirez).
+  Il est possible d'activer ou de désactiver les cibles (la sortie des logs), mais UNIQUEMENT dans le fichier "config.properties" (TRUE ou FALSE en fonction de ce que vous désirez).
+  
+  Il est possible d'activer la sortie sur plusieurs fichiers (200 lignes par fichier).
+  
+  Il est possible de changer le path/nom du fichier de sortie dans le fichier "config.properties" ou dans le programme directement
