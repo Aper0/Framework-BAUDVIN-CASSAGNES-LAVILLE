@@ -22,11 +22,11 @@ Il y a 3 niveaux de logs :
   - logger.debug("string");
   - logger.info("string");
   - logger.error("string");  
-  
   "string" sera le log que vous souhaitez faire apparaître en sortie (console et/ou fichier(s)).
 
+
   *Exemple de sortie (sans les tirets) :*
-  
+
     - DEBUG class : baudvincassagneslaville.com.Main - test debug - 21:13:25.287 26/02/15
     - INFO class : baudvincassagneslaville.com.Main - test info - 21:13:25.287 26/02/15
     - ERROR class : baudvincassagneslaville.com.Main - test error - 21:13:25.287 26/02/15
