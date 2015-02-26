@@ -25,6 +25,12 @@ Il y a 3 niveaux de logs :
   
   "string" sera le log que vous souhaitez faire apparaître en sortie (console et/ou fichier(s)).
 
+  Exemple de sortie : 
+  
+  DEBUG class : baudvincassagneslaville.com.Main - test debug - 21:13:25.287 26/02/15
+  INFO class : baudvincassagneslaville.com.Main - test info - 21:13:25.287 26/02/15
+  ERROR class : baudvincassagneslaville.com.Main - test error - 21:13:25.287 26/02/15
+
 **NOTES IMPORTANTES :**
 
   Il est possible de changer le niveau de priorité dans le fichier "config.properties" ou directement dans le programme.
