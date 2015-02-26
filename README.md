@@ -15,7 +15,7 @@ Il y a 3 niveaux de logs :
   
   Pour l'installation, rendez-vous sur http://uploaded.net/file/e37p0rgx pour télécharger la JAR correspondante.
   
-  Dans Eclipse, importer la JAR que vous venez de télécharger en faisant un clic droit sur votre projet -> Build-Path -> Add External Archives puis en choisissant le bon fichier (LogsFramework.jar).
+  Dans Eclipse, importez la JAR que vous venez de télécharger en faisant un clic droit sur votre projet -> Build-Path -> Add External Archives puis en choisissant le bon fichier (LogsFramework.jar).
   
   
 **Utilisation :**
