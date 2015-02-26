@@ -21,7 +21,9 @@ Il y a 3 niveaux de logs :
 
   - logger.debug("string");
   - logger.info("string");
-  - logger.error("string"); avec "string" qui sera ce que vous souhaitez écrire
+  - logger.error("string");  
+  
+  "string" sera le log que vous souhaitez faire apparaître en sortie (console et/ou fichier(s)).
 
 **NOTES IMPORTANTES :**
 
