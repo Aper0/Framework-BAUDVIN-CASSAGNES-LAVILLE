@@ -331,7 +331,10 @@ public class Logger {
 	 * @param filename
 	 */
 	public void setLogFileName(String filename) {
-		this.fileLogWriter.setFileName(filename);
+		if(isFLWInitialized()){
+			this.fileLogWriter.setFileName(filename);
+		}
+		// else do nothing
 	}
 	
 	
